@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Cw3.DAL;
 using Cw3.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,13 +12,21 @@ namespace Cw3.Controllers
     [Route("api/students")]
     public class StudentsController : ControllerBase
     {
-        [HttpGet]
-        public string GetSudents(string orderBy)
+        private readonly IDbService _dbService;
+
+        public StudentsController(IDbService dbService)
         {
-            return $"Kowalski, Malewski, Andrzejewski sortowanie={orderBy}";
+            _dbService = dbService;
         }
+        [HttpGet]
+        public IActionResult GetStudents(string orderBy)
+        {
+            return Ok(_dbService.GetStudents());
+        }
+
+
         [HttpGet("{id}")]
-        public IActionResult GetSudent(int id)
+        public IActionResult GetStudent(int id)
         {
             if (id == 1)
             {
@@ -34,5 +43,16 @@ namespace Cw3.Controllers
             student.IndexNumber = $"s{new Random().Next(1, 20000)}";
             return Ok(student);
         }
+        [HttpDelete("{id}")]
+        public IActionResult DeleteStudent(int id)
+        {
+            return Ok("Usuwanie ukończone studenta o id: " + id);
+        }
+        [HttpPut("{id}")]
+        public IActionResult PutStudent(int id)
+        {
+            return Ok("Aktualizacja dokończona studenta o id: " + id);
+        }
+
     }
 }
