@@ -11,9 +11,9 @@ namespace Cw3.Controllers
     public class StudentsController : ControllerBase
     {
         [HttpGet]
-        public string GetSudent()
+        public string GetSudents(string orderBy)
         {
-            return "Kowalski, Malewski, Andrzejewski";
+            return $"Kowalski, Malewski, Andrzejewski sortowanie={orderBy}";
         }
         [HttpGet("{id}")]
         public IActionResult GetSudent(int id)
